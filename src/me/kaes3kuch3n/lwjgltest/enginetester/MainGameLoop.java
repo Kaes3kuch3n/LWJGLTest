@@ -1,5 +1,9 @@
 package me.kaes3kuch3n.lwjgltest.enginetester;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -28,8 +32,19 @@ public class MainGameLoop {
 //		texture.setShineDamper(10);
 //		texture.setReflectivity(1);
 		
+		TexturedModel treeModel = new TexturedModel(OBJLoader.loadObjModel("tree", loader), new ModelTexture(loader.loadTexture("tree")));
+		
 		Entity entity = new Entity(staticModel, new Vector3f(5, -3, -20), 0, 120, 0, 1);
 		Entity secondEntify = new Entity(staticModel, new Vector3f(-5, -3, -20), 0, 210, 0, 1);
+		
+		List<Entity> trees = new ArrayList<Entity>();
+		ThreadLocalRandom rand = ThreadLocalRandom.current();
+		
+		for(int i = 0; i < 100; i++) {
+			int randZ = rand.nextInt(-800, 0);
+			int randX = rand.nextInt(-800, 800);
+			trees.add(new Entity(treeModel, new Vector3f(randX, -3, randZ), 0, 0, 0, 3));
+		}
 		
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
 		
@@ -46,6 +61,10 @@ public class MainGameLoop {
 			renderer.processTerrain(terrain2);
 			renderer.processEntity(entity);
 			renderer.processEntity(secondEntify);
+			
+			trees.forEach(tree -> {
+				renderer.processEntity(tree);
+			});
 			
 			renderer.render(light, camera);
 			DisplayManager.updateDisplay();
