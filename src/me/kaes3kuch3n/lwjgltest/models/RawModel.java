@@ -1,4 +1,4 @@
-package me.kaes3kuch3n.lwjgltest.renderengine;
+package me.kaes3kuch3n.lwjgltest.models;
 
 public class RawModel {
 	
