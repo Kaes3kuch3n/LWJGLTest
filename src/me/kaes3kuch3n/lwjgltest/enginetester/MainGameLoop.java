@@ -6,15 +6,16 @@ import me.kaes3kuch3n.lwjgltest.renderengine.DisplayManager;
 import me.kaes3kuch3n.lwjgltest.renderengine.Loader;
 import me.kaes3kuch3n.lwjgltest.renderengine.RawModel;
 import me.kaes3kuch3n.lwjgltest.renderengine.Renderer;
+import me.kaes3kuch3n.lwjgltest.shaders.StaticShader;
 
 public class MainGameLoop {
 
 	public static void main(String[] args) {
 		
 		DisplayManager.createDisplay();
-		
 		Loader loader = new Loader();
 		Renderer renderer = new Renderer();
+		StaticShader shader = new StaticShader();
 		
 		//OpenGL expects vertices to be defined counter clockwise by default
 		float[] vertices = {
@@ -31,13 +32,16 @@ public class MainGameLoop {
 		RawModel model = loader.loadToVAO(vertices);
 		
 		while(!Display.isCloseRequested()) {
-			renderer.prepare();
 			//game logic
+			renderer.prepare();
+			shader.start();
 			renderer.render(model);
+			shader.stop();
 			DisplayManager.updateDisplay();
 			
 		}
 		
+		shader.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();
 		
