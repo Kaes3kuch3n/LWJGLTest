@@ -10,9 +10,8 @@ import me.kaes3kuch3n.lwjgltest.models.RawModel;
 import me.kaes3kuch3n.lwjgltest.models.TexturedModel;
 import me.kaes3kuch3n.lwjgltest.renderengine.DisplayManager;
 import me.kaes3kuch3n.lwjgltest.renderengine.Loader;
+import me.kaes3kuch3n.lwjgltest.renderengine.MasterRenderer;
 import me.kaes3kuch3n.lwjgltest.renderengine.OBJLoader;
-import me.kaes3kuch3n.lwjgltest.renderengine.Renderer;
-import me.kaes3kuch3n.lwjgltest.shaders.StaticShader;
 import me.kaes3kuch3n.lwjgltest.textures.ModelTexture;
 
 public class MainGameLoop {
@@ -21,14 +20,12 @@ public class MainGameLoop {
 		
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
-		StaticShader shader = new StaticShader();
-		Renderer renderer = new Renderer(shader);
 				
 		RawModel model = OBJLoader.loadObjModel("stall", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("stallTexture"));
 		TexturedModel staticModel = new TexturedModel(model, texture);
-		texture.setShineDamper(10);
-		texture.setReflectivity(1);
+//		texture.setShineDamper(10);
+//		texture.setReflectivity(1);
 		
 		Entity entity = new Entity(staticModel, new Vector3f(5, -3, -20), 0, 120, 0, 1);
 		Entity secondEntify = new Entity(staticModel, new Vector3f(-5, -3, -20), 0, 210, 0, 1);
@@ -37,21 +34,19 @@ public class MainGameLoop {
 		
 		Camera camera = new Camera();
 		
+		MasterRenderer renderer = new MasterRenderer();
 		while(!Display.isCloseRequested()) {
-			entity.increaseRotation(0, 0, 0);
 			camera.move();
-			renderer.prepare();
-			shader.start();
-			shader.loadLight(light);
-			shader.loadViewMatrix(camera);
-			renderer.render(entity, shader);
-			renderer.render(secondEntify, shader);
-			shader.stop();
+			
+			renderer.processEntity(entity);
+			renderer.processEntity(secondEntify);
+			
+			renderer.render(light, camera);
 			DisplayManager.updateDisplay();
 			
 		}
 		
-		shader.cleanUp();
+		renderer.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();
 		
