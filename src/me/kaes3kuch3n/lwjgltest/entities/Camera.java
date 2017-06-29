@@ -10,22 +10,24 @@ public class Camera {
 	private float yaw;
 	private float roll;
 	
+	private float movementSpeed = 0.06f;
+	
 	public Camera() {
 		
 	}
 	
 	public void move() {
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			position.z -= 0.02f;
+			position.z -= movementSpeed;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			position.x += 0.02f;
+			position.x += movementSpeed;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			position.x -= 0.02f;
+			position.x -= movementSpeed;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			position.z += 0.02f;
+			position.z += movementSpeed;
 		}
 	}
 
