@@ -11,6 +11,7 @@ import me.kaes3kuch3n.lwjgltest.entities.Entity;
 import me.kaes3kuch3n.lwjgltest.models.RawModel;
 import me.kaes3kuch3n.lwjgltest.models.TexturedModel;
 import me.kaes3kuch3n.lwjgltest.shaders.StaticShader;
+import me.kaes3kuch3n.lwjgltest.textures.ModelTexture;
 import me.kaes3kuch3n.lwjgltest.toolbox.Maths;
 
 public class Renderer {
@@ -43,6 +44,8 @@ public class Renderer {
 		GL20.glEnableVertexAttribArray(2);
 		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 		shader.loadTransformationMatrix(transformationMatrix);
+		ModelTexture texture = texturedModel.getTexture();
+		shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturedModel.getTexture().getID());
 		GL11.glDrawElements(GL11.GL_TRIANGLES, model.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
