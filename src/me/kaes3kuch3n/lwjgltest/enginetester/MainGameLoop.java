@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import me.kaes3kuch3n.lwjgltest.entities.Camera;
 import me.kaes3kuch3n.lwjgltest.entities.Entity;
+import me.kaes3kuch3n.lwjgltest.entities.Light;
 import me.kaes3kuch3n.lwjgltest.models.RawModel;
 import me.kaes3kuch3n.lwjgltest.models.TexturedModel;
 import me.kaes3kuch3n.lwjgltest.renderengine.DisplayManager;
@@ -30,6 +31,8 @@ public class MainGameLoop {
 		Entity entity = new Entity(staticModel, new Vector3f(5, -3, -20), 0, 120, 0, 1);
 		Entity secondEntify = new Entity(staticModel, new Vector3f(-5, -3, -20), 0, 210, 0, 1);
 		
+		Light light = new Light(new Vector3f(0, 0, -15), new Vector3f(1, 1, 1));
+		
 		Camera camera = new Camera();
 		
 		while(!Display.isCloseRequested()) {
@@ -37,6 +40,7 @@ public class MainGameLoop {
 			camera.move();
 			renderer.prepare();
 			shader.start();
+			shader.loadLight(light);
 			shader.loadViewMatrix(camera);
 			renderer.render(entity, shader);
 			renderer.render(secondEntify, shader);

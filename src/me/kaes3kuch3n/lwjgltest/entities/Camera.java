@@ -20,14 +20,20 @@ public class Camera {
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			position.z -= movementSpeed;
 		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
+			position.z += movementSpeed;
+		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			position.x += movementSpeed;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			position.x -= movementSpeed;
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			position.z += movementSpeed;
+		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+			position.y += movementSpeed;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+			position.y -= movementSpeed;
 		}
 	}
 
