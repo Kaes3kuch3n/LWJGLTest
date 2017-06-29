@@ -3,6 +3,9 @@ package me.kaes3kuch3n.lwjgltest.enginetester;
 import org.lwjgl.opengl.Display;
 
 import me.kaes3kuch3n.lwjgltest.renderengine.DisplayManager;
+import me.kaes3kuch3n.lwjgltest.renderengine.Loader;
+import me.kaes3kuch3n.lwjgltest.renderengine.RawModel;
+import me.kaes3kuch3n.lwjgltest.renderengine.Renderer;
 
 public class MainGameLoop {
 
@@ -10,14 +13,32 @@ public class MainGameLoop {
 		
 		DisplayManager.createDisplay();
 		
+		Loader loader = new Loader();
+		Renderer renderer = new Renderer();
+		
+		//OpenGL expects vertices to be defined counter clockwise by default
+		float[] vertices = {
+				//Left bottom triangle
+				-0.5f, 0.5f, 0f, 
+				-0.5f, -0.5f, 0f, 
+				0.5f, -0.5f, 0f, 
+				//Right top triangle
+				0.5f, -0.5f, 0f, 
+				0.5f, 0.5f, 0f, 
+				-0.5f, 0.5f, 0f
+		};
+		
+		RawModel model = loader.loadToVAO(vertices);
+		
 		while(!Display.isCloseRequested()) {
-			
+			renderer.prepare();
 			//game logic
-			//render
+			renderer.render(model);
 			DisplayManager.updateDisplay();
 			
 		}
 		
+		loader.cleanUp();
 		DisplayManager.closeDisplay();
 		
 	}
