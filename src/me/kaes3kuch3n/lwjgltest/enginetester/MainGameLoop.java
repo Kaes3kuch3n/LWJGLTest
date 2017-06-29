@@ -12,6 +12,7 @@ import me.kaes3kuch3n.lwjgltest.renderengine.DisplayManager;
 import me.kaes3kuch3n.lwjgltest.renderengine.Loader;
 import me.kaes3kuch3n.lwjgltest.renderengine.MasterRenderer;
 import me.kaes3kuch3n.lwjgltest.renderengine.OBJLoader;
+import me.kaes3kuch3n.lwjgltest.terrains.Terrain;
 import me.kaes3kuch3n.lwjgltest.textures.ModelTexture;
 
 public class MainGameLoop {
@@ -30,7 +31,10 @@ public class MainGameLoop {
 		Entity entity = new Entity(staticModel, new Vector3f(5, -3, -20), 0, 120, 0, 1);
 		Entity secondEntify = new Entity(staticModel, new Vector3f(-5, -3, -20), 0, 210, 0, 1);
 		
-		Light light = new Light(new Vector3f(0, 0, -15), new Vector3f(1, 1, 1));
+		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
+		
+		Terrain terrain = new Terrain(0, -800, loader, new ModelTexture(loader.loadTexture("grass")));
+		Terrain terrain2 = new Terrain(1, -800, loader, new ModelTexture(loader.loadTexture("grass")));
 		
 		Camera camera = new Camera();
 		
@@ -38,6 +42,8 @@ public class MainGameLoop {
 		while(!Display.isCloseRequested()) {
 			camera.move();
 			
+			renderer.processTerrain(terrain);
+			renderer.processTerrain(terrain2);
 			renderer.processEntity(entity);
 			renderer.processEntity(secondEntify);
 			
