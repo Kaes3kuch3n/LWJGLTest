@@ -35,6 +35,11 @@ public class Camera {
 		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
 			position.y -= movementSpeed;
 		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			movementSpeed = 1.0f;
+		} else {
+			movementSpeed = 0.5f;
+		}
 	}
 
 	public Vector3f getPosition() {
