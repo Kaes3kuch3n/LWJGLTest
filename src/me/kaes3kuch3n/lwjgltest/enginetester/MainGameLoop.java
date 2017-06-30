@@ -18,6 +18,8 @@ import me.kaes3kuch3n.lwjgltest.renderengine.MasterRenderer;
 import me.kaes3kuch3n.lwjgltest.renderengine.OBJLoader;
 import me.kaes3kuch3n.lwjgltest.terrains.Terrain;
 import me.kaes3kuch3n.lwjgltest.textures.ModelTexture;
+import me.kaes3kuch3n.lwjgltest.textures.TerrainTexture;
+import me.kaes3kuch3n.lwjgltest.textures.TerrainTexturePack;
 
 public class MainGameLoop {
 
@@ -25,6 +27,16 @@ public class MainGameLoop {
 		
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
+		
+		//********** TERRAIN TEXTURE PACK **********
+		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassy2"));
+		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("mud"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("grassFlowers"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("path"));
+		
+		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
+		//******************************************
 				
 		RawModel model = OBJLoader.loadObjModel("stall", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("stallTexture"));
@@ -85,8 +97,8 @@ public class MainGameLoop {
 		
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
 		
-		Terrain terrain = new Terrain(0, -800, loader, new ModelTexture(loader.loadTexture("grass")));
-		Terrain terrain2 = new Terrain(1, -800, loader, new ModelTexture(loader.loadTexture("grass")));
+		Terrain terrain = new Terrain(0, -800, loader, texturePack, blendMap);
+		Terrain terrain2 = new Terrain(1, -800, loader, texturePack, blendMap);
 		
 		Camera camera = new Camera();
 		
