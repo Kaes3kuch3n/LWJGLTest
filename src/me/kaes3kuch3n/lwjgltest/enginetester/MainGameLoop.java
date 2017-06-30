@@ -33,6 +33,7 @@ public class MainGameLoop {
 //		texture.setReflectivity(1);
 		
 		TexturedModel treeModel = new TexturedModel(OBJLoader.loadObjModel("tree", loader), new ModelTexture(loader.loadTexture("tree")));
+		TexturedModel tree2Model = new TexturedModel(OBJLoader.loadObjModel("lowPolyTree", loader), new ModelTexture(loader.loadTexture("lowPolyTree")));
 		TexturedModel fernModel = new TexturedModel(OBJLoader.loadObjModel("fern", loader), new ModelTexture(loader.loadTexture("fern")));
 		fernModel.getTexture().setHasTransparency(true);
 		TexturedModel grassModel = new TexturedModel(OBJLoader.loadObjModel("grassModel", loader), new ModelTexture(loader.loadTexture("grassTexture")));
@@ -48,31 +49,38 @@ public class MainGameLoop {
 		ThreadLocalRandom rand = ThreadLocalRandom.current();
 		
 		List<Entity> trees = new ArrayList<Entity>();
-		for(int i = 0; i < 100; i++) {
+		for(int i = 0; i < 200; i++) {
 			int randZ = rand.nextInt(-800, 0);
 			int randX = rand.nextInt(-800, 800);
-			trees.add(new Entity(treeModel, new Vector3f(randX, -3, randZ), 0, 0, 0, 3));
+			trees.add(new Entity(treeModel, new Vector3f(randX, -3, randZ), 0, 0, 0, 5));
+		}
+		
+		List<Entity> trees2 = new ArrayList<Entity>();
+		for(int i = 0; i < 300; i++) {
+			int randZ = rand.nextInt(-800, 0);
+			int randX = rand.nextInt(-800, 800);
+			trees2.add(new Entity(tree2Model, new Vector3f(randX, -3, randZ), 0, 0, 0, 0.6f));
 		}
 		
 		List<Entity> ferns = new ArrayList<Entity>();
-		for(int i = 0; i < 100; i++) {
+		for(int i = 0; i < 500; i++) {
 			int randZ = rand.nextInt(-800, 0);
 			int randX = rand.nextInt(-800, 800);
 			ferns.add(new Entity(fernModel, new Vector3f(randX, -3, randZ), 0, 0, 0, 0.6f));
 		}
 		
 		List<Entity> grass = new ArrayList<Entity>();
-		for(int i = 0; i < 100; i++) {
+		for(int i = 0; i < 500; i++) {
 			int randZ = rand.nextInt(-800, 0);
 			int randX = rand.nextInt(-800, 800);
-			grass.add(new Entity(grassModel, new Vector3f(randX, -3, randZ), 0, 0, 0, 1));
+			grass.add(new Entity(grassModel, new Vector3f(randX, -3, randZ), 0, 0, 0, 2));
 		}
 		
 		List<Entity> flowers = new ArrayList<Entity>();
-		for(int i = 0; i < 100; i++) {
+		for(int i = 0; i < 300; i++) {
 			int randZ = rand.nextInt(-800, 0);
 			int randX = rand.nextInt(-800, 800);
-			flowers.add(new Entity(flowerModel, new Vector3f(randX, -3, randZ), 0, 0, 0, 1));
+			flowers.add(new Entity(flowerModel, new Vector3f(randX, -3, randZ), 0, 0, 0, 1.5f));
 		}
 		
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
@@ -92,6 +100,9 @@ public class MainGameLoop {
 			renderer.processEntity(secondEntify);
 			
 			trees.forEach(tree -> {
+				renderer.processEntity(tree);
+			});
+			trees2.forEach(tree -> {
 				renderer.processEntity(tree);
 			});
 			ferns.forEach(fern -> {
