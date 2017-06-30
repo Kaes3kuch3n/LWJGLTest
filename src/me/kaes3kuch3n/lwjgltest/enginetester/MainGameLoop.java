@@ -143,7 +143,7 @@ public class MainGameLoop {
 		
 		
 		//********** CREATE CAMERA **********
-		Camera camera = new Camera();
+		Camera camera = new Camera(player);
 		
 		
 		//********** RENDER SCENE **********
