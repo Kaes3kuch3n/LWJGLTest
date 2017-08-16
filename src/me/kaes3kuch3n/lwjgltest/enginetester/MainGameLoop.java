@@ -41,7 +41,7 @@ public class MainGameLoop {
 		//******************************************
 		
 		
-		//********** STALL TEXTUERD MODEL **********
+		//********** STALL TEXTURED MODEL **********
 		RawModel model = OBJLoader.loadObjModel("stall", loader);
 		ModelTexture texture = new ModelTexture(loader.loadTexture("stallTexture"));
 		TexturedModel staticModel = new TexturedModel(model, texture);
@@ -82,7 +82,7 @@ public class MainGameLoop {
 		
 		//Stalls
 		Entity entity = new Entity(staticModel, new Vector3f(5, -3, -20), 0, 120, 0, 1);
-		Entity secondEntify = new Entity(staticModel, new Vector3f(-5, -3, -20), 0, 210, 0, 1);
+		Entity secondEntity = new Entity(staticModel, new Vector3f(-5, -3, -20), 0, 210, 0, 1);
 		
 		ThreadLocalRandom rand = ThreadLocalRandom.current();
 		
@@ -156,7 +156,7 @@ public class MainGameLoop {
 			renderer.processTerrain(terrain);
 			renderer.processTerrain(terrain2);
 			renderer.processEntity(entity);
-			renderer.processEntity(secondEntify);
+			renderer.processEntity(secondEntity);
 			trees.forEach(tree -> renderer.processEntity(tree));
 			trees2.forEach(tree -> renderer.processEntity(tree));
 			ferns.forEach(fern -> renderer.processEntity(fern));
